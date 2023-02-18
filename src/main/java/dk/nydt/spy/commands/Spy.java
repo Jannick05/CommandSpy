@@ -32,6 +32,20 @@ public class Spy implements CommandExecutor {
             Bukkit.broadcastMessage("ok åbner");
             openSpyMenu(p, 0);
             return true;
+        } else {
+            if (args[0].equalsIgnoreCase("reload")) {
+                if (p.hasPermission(SpyMain.configYML.getString("Permissions.reload"))) {
+                    SpyMain.config.reloadConfig();
+                    SpyMain.configYML = SpyMain.config.getConfig();
+                    SpyMain.data.reloadConfig();
+                    SpyMain.dataYML = SpyMain.data.getConfig();
+                    p.sendMessage(Chat.colored(SpyMain.configYML.getString("Messages.reload_success")));
+                } else {
+                    p.sendMessage(Chat.colored(SpyMain.configYML.getString("Messages.reload_failed")));
+                }
+            } else {
+                p.sendMessage(Chat.colored(SpyMain.configYML.getString("Messages.argument_error")));
+            }
         }
         return false;
     }

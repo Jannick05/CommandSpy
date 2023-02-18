@@ -6,6 +6,6 @@ authors: [ Nydt ]
 description: Commandspy plugin
 website: mcstore.dk
 commands:
-  Spy:
+  spy:
     description: opens spy menu
     aliases: ['cspy', 'commandspy']

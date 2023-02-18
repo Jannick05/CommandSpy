@@ -27,7 +27,7 @@ public final class SpyMain extends JavaPlugin {
 
         license = new Config(this, null, "license.yml");
         licenseYML = license.getConfig();
-
+        System.out.println(licenseYML);
         licenses = licenseYML.getString("License");
         if(!new AdvancedLicense(licenses, "https://license.cutekat.dk/verify.php", this).debug().register()) return;
         access = true;
