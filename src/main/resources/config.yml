@@ -1,0 +1,31 @@
+GUI:
+  color: "&2&l"
+  name: "&8[ &a&lSPY &f&lEDITOR &8]"
+  top-row: "&a"
+  bottom-row: "&f"
+
+  arrow_left: "http://textures.minecraft.net/texture/b76230a0ac52af11e4bc84009c6890a4029472f3947b4f465b5b5722881aacc7"
+  arrow_right: "http://textures.minecraft.net/texture/dbf8b6277cd36266283cb5a9e6943953c783e6ff7d6a2d59d15ad0697e91d43c"
+
+  fail_head: ""http://textures.minecraft.net/texture/797955462e4e576664499ac4a1c572f6143f19ad2d6194776198f8d136fdb2""
+  fail_name: "&4&lINGEN ADGANG!"
+  fail_lore:
+    - "&7ok"
+    - "ok&9!"
+
+  disable_name: "ok"
+  disable_lore:
+    - "sejt"
+    - "nok"
+
+  disable_player_lore:
+    - "tryk for at slå fra"
+
+  enable_name: "vildt"
+  enable_lore:
+    - "sinds"
+    - "sygt"
+
+Permissions:
+  reload: "spy.reload"
+  admin: "spy.admin"

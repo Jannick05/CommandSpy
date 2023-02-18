@@ -1,0 +1,11 @@
+name: Spy
+version: '${project.version}'
+main: dk.nydt.spy.SpyMain
+api-version: 1.8
+authors: [ Nydt ]
+description: Commandspy plugin
+website: mcstore.dk
+commands:
+  Spy:
+    description: opens spy menu
+    aliases: ['cspy', 'commandspy']
