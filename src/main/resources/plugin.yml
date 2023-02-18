@@ -8,4 +8,4 @@ website: mcstore.dk
 commands:
   spy:
     description: opens spy menu
-    aliases: ['cspy', 'commandspy']
+    aliases: [cspy, commandspy]

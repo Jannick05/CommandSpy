@@ -124,7 +124,7 @@ public class Spy implements CommandExecutor {
             }
             String color = SpyMain.configYML.getString("GUI.color");
             List<String> disable_player_lore = SpyMain.configYML.getStringList("GUI.disable_player_lore");
-            for (String key : SpyMain.dataYML.getConfigurationSection("Players").getKeys(true)) {
+            for (String key : SpyMain.dataYML.getConfigurationSection("Players").getKeys(false)) {
                 UUID p_uuid = UUID.fromString(key);
                 n2++;
                 if (!Objects.equals(p_uuid, uuid)) {

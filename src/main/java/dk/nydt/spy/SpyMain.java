@@ -22,14 +22,13 @@ public final class SpyMain extends JavaPlugin {
         instance = this;
 
         //license yml
-        if (!(new File(getDataFolder(), "license.yml")).exists())
-            saveResource("license.yml", false);
+        if (!(new File(getDataFolder(), "license.yml")).exists())saveResource("license.yml", false);
 
         license = new Config(this, null, "license.yml");
         licenseYML = license.getConfig();
         System.out.println(licenseYML);
         licenses = licenseYML.getString("License");
-        if(!new AdvancedLicense(licenses, "https://license.cutekat.dk/verify.php", this).debug().register()) return;
+        //if(!new AdvancedLicense(licenses, "https://license.cutekat.dk/verify.php", this).debug().register()) return;
         access = true;
 
         //config yml

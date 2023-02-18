@@ -12,10 +12,12 @@
     <name>Spy</name>
 
     <description>Commandspy plugin</description>
+
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <url>mcstore.dk</url>
 
     <build>
