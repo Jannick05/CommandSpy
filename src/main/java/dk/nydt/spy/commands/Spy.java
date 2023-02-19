@@ -19,7 +19,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 public class Spy implements CommandExecutor {
@@ -27,11 +26,11 @@ public class Spy implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
-        Bukkit.broadcastMessage("ok prøver");
         if (args.length == 0) {
-            Bukkit.broadcastMessage("ok åbner");
-            openSpyMenu(p, 0);
-            return true;
+            if (p.hasPermission(SpyMain.configYML.getString("Permissions.usage"))) {
+                openSpyMenu(p, 0);
+                return true;
+            }
         } else {
             if (args[0].equalsIgnoreCase("reload")) {
                 if (p.hasPermission(SpyMain.configYML.getString("Permissions.reload"))) {
@@ -51,11 +50,8 @@ public class Spy implements CommandExecutor {
     }
 
     public static void openSpyMenu(Player p, int page) {
-        Bukkit.broadcastMessage("ok");
         String admin_permission = SpyMain.configYML.getString("Permissions.admin");
-
         String inv_name = SpyMain.configYML.getString("GUI.name");
-        Bukkit.broadcastMessage(inv_name);
         String top_row = SpyMain.configYML.getString("GUI.top-row");
         String bottom_row = SpyMain.configYML.getString("GUI.bottom-row");
         String arrow_left = SpyMain.configYML.getString("GUI.arrow-left");
@@ -92,72 +88,65 @@ public class Spy implements CommandExecutor {
             int n = 0;
             int page_start = 45*page;
             int n2 = 1;
-
-            if (Spytils.isSpy(p)) {
-                String disable_name = Chat.colored(SpyMain.configYML.getString("GUI.disable_name"));
-                List<String> disable_lore = SpyMain.configYML.getStringList("GUI.disable_lore");
-
-                ItemStack disable = new ItemStack(Material.INK_SACK, (byte) 10);
-                ItemMeta disable_meta = disable.getItemMeta();
-                disable_meta.setDisplayName(disable_name);
-                ArrayList<String> disable_lores = new ArrayList<>();
-                for (String line : disable_lore) {
-                    disable_lores.add(Chat.colored(line));
-                }
-                disable_meta.setLore(disable_lores);
-                disable.setItemMeta(disable_meta);
-                inv.setItem(40, disable);
-            } else {
-                String enable_name = Chat.colored(SpyMain.configYML.getString("GUI.enable_name"));
-                List<String> enable_lore = SpyMain.configYML.getStringList("GUI.enable_lore");
-
-                ItemStack enable = new ItemStack(Material.INK_SACK, (byte) 10);
-                ItemMeta enable_meta = enable.getItemMeta();
-                enable_meta.setDisplayName(enable_name);
-                ArrayList<String> enable_lores = new ArrayList<>();
-                for (String line : enable_lore) {
-                    enable_lores.add(Chat.colored(line));
-                }
-                enable_meta.setLore(enable_lores);
-                enable.setItemMeta(enable_meta);
-                inv.setItem(40, enable);
-            }
             String color = SpyMain.configYML.getString("GUI.color");
             List<String> disable_player_lore = SpyMain.configYML.getStringList("GUI.disable_player_lore");
-            for (String key : SpyMain.dataYML.getConfigurationSection("Players").getKeys(false)) {
+            List<String> players = SpyMain.dataYML.getStringList("players");
+            n = 9;
+            for (String key : players) {
                 UUID p_uuid = UUID.fromString(key);
                 n2++;
-                if (!Objects.equals(p_uuid, uuid)) {
-                    if (n2 >= page_start) {
-                        OfflinePlayer player = Bukkit.getOfflinePlayer(p_uuid);
-                        String playerName = player.getName();
-                        ItemStack head = GUI.getPlayerSkull(playerName);
-                        ItemMeta head_meta = head.getItemMeta();
-                        head_meta.setDisplayName(Chat.colored(color + playerName));
-                        ArrayList<String> player_lore = new ArrayList<>();
-                        for (String line : disable_player_lore) {
-                            player_lore.add(Chat.colored(line));
-                        }
-                        head_meta.setLore(player_lore);
-                        head.setItemMeta(head_meta);
-                        inv.setItem(n, head);
-                        n++;
+                if (n2 >= page_start) {
+                    OfflinePlayer player = Bukkit.getOfflinePlayer(p_uuid);
+                    String playerName = player.getName();
+                    ItemStack head = GUI.getPlayerSkull(playerName);
+                    ItemMeta head_meta = head.getItemMeta();
+                    head_meta.setDisplayName(Chat.colored(color + playerName));
+                    List<String> player_lore = new ArrayList<>();
+                    for (String line : disable_player_lore) {
+                        line = line.replace("%player%", playerName);
+                        player_lore.add(Chat.colored(line));
+                    }
+                    head_meta.setLore(player_lore);
+                    head.setItemMeta(head_meta);
+                    inv.setItem(n, head);
+                    n++;
 
-                        if (n >= 45) {
-                            break;
-                        }
+                    if (n >= 35) {
+                        break;
                     }
                 }
             }
-            if(size > page_start + 45) {
-                inv.setItem(50, GUI.createItemStack(GUI.getSkull(arrow_right), Chat.colored("&f&lNæste Side"), "&7" + (page + 1)));
-            }
-            if(page > 0) {
-                inv.setItem(48, GUI.createItemStack(GUI.getSkull(arrow_left), Chat.colored("&f&lForrige Side"), "&7" + (page - 1)));
-            }
-
-            p.openInventory(inv);
         }
+        if (!Spytils.isSpy(p)) {
+            String enable_name = Chat.colored(SpyMain.configYML.getString("GUI.enable_name"));
+            List<String> enable_lore = SpyMain.configYML.getStringList("GUI.enable_lore");
+
+            ItemStack enable = new ItemStack(Material.INK_SACK, 1, (byte) 10);
+            ItemMeta enable_meta = enable.getItemMeta();
+            enable_meta.setDisplayName(enable_name);
+            ArrayList<String> enable_lores = new ArrayList<>();
+            for (String line : enable_lore) {
+                enable_lores.add(Chat.colored(line));
+            }
+            enable_meta.setLore(enable_lores);
+            enable.setItemMeta(enable_meta);
+            inv.setItem(40, enable);
+        } else {
+            String disable_name = Chat.colored(SpyMain.configYML.getString("GUI.disable_name"));
+            List<String> disable_lore = SpyMain.configYML.getStringList("GUI.disable_lore");
+
+            ItemStack disable = new ItemStack(Material.INK_SACK, 1, (byte) 1);
+            ItemMeta disable_meta = disable.getItemMeta();
+            disable_meta.setDisplayName(disable_name);
+            ArrayList<String> disable_lores = new ArrayList<>();
+            for (String line : disable_lore) {
+                disable_lores.add(Chat.colored(line));
+            }
+            disable_meta.setLore(disable_lores);
+            disable.setItemMeta(disable_meta);
+            inv.setItem(40, disable);
+        }
+        p.openInventory(inv);
     }
 
 }

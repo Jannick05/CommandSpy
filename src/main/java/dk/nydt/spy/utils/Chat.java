@@ -1,10 +1,14 @@
 package dk.nydt.spy.utils;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 
 public class Chat {
-    public static String colored(String s){
+    public static String colored(String s) {
         return ChatColor.translateAlternateColorCodes('&', s);
+    }
+    public static String plain(String s) {
+        return s.replaceAll("§", "&");
+
     }
 
 }

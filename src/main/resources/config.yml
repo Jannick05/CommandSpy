@@ -4,33 +4,49 @@ GUI:
   top-row: "&a"
   bottom-row: "&f"
 
-  arrow_left: "http://textures.minecraft.net/texture/b76230a0ac52af11e4bc84009c6890a4029472f3947b4f465b5b5722881aacc7"
-  arrow_right: "http://textures.minecraft.net/texture/dbf8b6277cd36266283cb5a9e6943953c783e6ff7d6a2d59d15ad0697e91d43c"
-
-  fail_head: "http://textures.minecraft.net/texture/797955462e4e576664499ac4a1c572f6143f19ad2d6194776198f8d136fdb2"
+  fail_head: "http://textures.minecraft.net/texture/beb588b21a6f98ad1ff4e085c552dcb050efc9cab427f46048f18fc803475f7"
   fail_name: "&4&lINGEN ADGANG!"
   fail_lore:
-    - "&7ok"
-    - "ok&9!"
+    - "&8&m---------------------------"
+    - "&7"
+    - "&fDu har ikke &cAdmin &fadgang,"
+    - "&ftil at se spillere med &espy"
+    - "&7"
+    - "&8&m---------------------------"
 
-  disable_name: "ok"
+  disable_name: "&c&lDEAKTIVER"
   disable_lore:
-    - "sejt"
-    - "nok"
+    - "&8&m---------------------------"
+    - "&7"
+    - "&fTryk her for at slå spy &cfra"
+    - "&7"
+    - "&8&m---------------------------"
 
   disable_player_lore:
-    - "tryk for at slå fra"
+    - "&8&m---------------------------"
+    - "&7"
+    - "&fTryk her for at slå spy &cfra"
+    - "&ffor spilleren &e%player%"
+    - "&7"
+    - "&8&m---------------------------"
 
-  enable_name: "vildt"
+  enable_name: "&a&lAKTIVER"
   enable_lore:
-    - "sinds"
-    - "sygt"
+    - "&8&m---------------------------"
+    - "&7"
+    - "&fTryk her for at slå spy &atil"
+    - "&7"
+    - "&8&m---------------------------"
 
-Messsages:
-  reload_success: "successfully reloaded"
-  reload_failed: "error reloading"
-  argument_error: "no argument found"
+Messages:
+  reload_success: "&aSuccessfully reloaded"
+  reload_failed: "&cError reloading"
+  argument_error: "&cArgument ikke fundet!"
+  no_permission: "&cIngen adgang!"
+
+  spy: "&e%player% &fbrugte command &6/%command%"
 
 Permissions:
+  usage: "spy.use"
   reload: "spy.reload"
   admin: "spy.admin"

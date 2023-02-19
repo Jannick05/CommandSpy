@@ -1,6 +1,8 @@
 package dk.nydt.spy;
 
 import dk.nydt.spy.commands.Spy;
+import dk.nydt.spy.events.CommandListener;
+import dk.nydt.spy.events.InventoryListener;
 import dk.nydt.spy.utils.Config;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -28,7 +30,7 @@ public final class SpyMain extends JavaPlugin {
         licenseYML = license.getConfig();
         System.out.println(licenseYML);
         licenses = licenseYML.getString("License");
-        //if(!new AdvancedLicense(licenses, "https://license.cutekat.dk/verify.php", this).debug().register()) return;
+        if(!new AdvancedLicense(licenses, "https://license.cutekat.dk/verify.php", this).debug().register()) return;
         access = true;
 
         //config yml
@@ -47,6 +49,10 @@ public final class SpyMain extends JavaPlugin {
 
         //register commands
         getCommand("Spy").setExecutor(new Spy());
+
+        //register events
+        getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
+        getServer().getPluginManager().registerEvents(new CommandListener(this), this);
 
     }
 
